@@ -38,15 +38,17 @@ public class UserMealsUtil {
 
         for (UserMeal currentMeal :
                 mealList) {
+            caloriesMapPerDay.merge(currentMeal.getDateTime().toLocalDate(), currentMeal.getCalories(), Integer::sum);
             if (isInInterval(currentMeal, startTime, endTime)) {
                 result.add(new UserMealWithExceed(currentMeal.getDateTime(), currentMeal.getDescription(),
                         currentMeal.getCalories(), false));
-                caloriesMapPerDay.merge(currentMeal.getDateTime().toLocalDate(), currentMeal.getCalories(), Integer::sum);
             }
         }
 
         for (UserMealWithExceed currentMeal :
                 result) {
+
+            System.out.println(caloriesMapPerDay.get(currentMeal.getDateTime().toLocalDate()));
             if (caloriesMapPerDay.get(currentMeal.getDateTime().toLocalDate()) > caloriesPerDay) {
                 currentMeal.setExceed(true);
             }
