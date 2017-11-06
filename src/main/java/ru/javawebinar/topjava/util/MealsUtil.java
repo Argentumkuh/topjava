@@ -42,6 +42,27 @@ public class MealsUtil {
         return result;
     }
 
+    public static List<MealWithExceed> getFilteredWithExceededCycle(List<Meal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+
+        List<MealWithExceed> result = new ArrayList<>();
+        Map<LocalDate, Integer> caloriesMapPerDay= new HashMap<>();
+
+        for (Meal currentMeal :
+                mealList) {
+            caloriesMapPerDay.merge(currentMeal.getDateTime().toLocalDate(), currentMeal.getCalories(), Integer::sum);
+        }
+
+        for (Meal currentMeal :
+                mealList) {
+            if (isInInterval(currentMeal.getDateTime().toLocalTime(), startTime, endTime)) {
+                result.add(new MealWithExceed(currentMeal.getDateTime(), currentMeal.getDescription(), currentMeal.getCalories(),
+                        caloriesMapPerDay.get(currentMeal.getDateTime().toLocalDate()) > caloriesPerDay));
+            }
+        }
+
+        return result;
+    }
+
     private static boolean isInInterval(LocalTime time, LocalTime startTime, LocalTime endTime) {
         return time.compareTo(startTime) >=0 && time.compareTo(endTime) <= 0;
     }
