@@ -5,12 +5,13 @@ import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -30,5 +31,9 @@ public class MealServlet extends HttpServlet {
 
         request.getRequestDispatcher("/meal.jsp").forward(request, response);
 
+    }
+
+    public String getFormattedDate (LocalDateTime dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("dd::MMM::uuuu HH::mm::ss"));
     }
 }
