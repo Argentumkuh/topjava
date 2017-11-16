@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.web.user;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.service.UserService;
 
 @Controller
 public class ProfileRestController extends AbstractUserController {
