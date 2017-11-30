@@ -1,19 +1,40 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@NamedQueries({
+        @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal meal WHERE meal.id=:id AND meal.user.id=:user_id"),
+        @NamedQuery(name = Meal.GET, query = "SELECT meal FROM Meal meal WHERE meal.id=:id AND meal.user.id=:user_id"),
+        @NamedQuery(name = Meal.GET_All, query = "SELECT meal FROM Meal meal WHERE meal.user.id=:user_id ORDER BY meal.dateTime"),
+        @NamedQuery(name = Meal.GET_ALL_BETWEEN, query = "SELECT meal FROM Meal meal WHERE meal.dateTime >=:startDate " +
+                "AND meal.dateTime >=:endDate ORDER BY meal.dateTime"),
+})
+@Entity
+@Table(name = "meals")
 public class Meal extends AbstractBaseEntity {
+
+    public static final String DELETE = "Meal.delete";
+    public static final String GET = "Meal.get";
+    public static final String GET_All = "Meal.getAll";
+    public static final String GET_ALL_BETWEEN = "Meal.getAllBetween";
+
+    @Column(name = "date_time", unique = true, nullable = false, columnDefinition = "timestamp default now()")
+    @NotNull
     private LocalDateTime dateTime;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "calories")
+    @NotNull
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Meal() {
