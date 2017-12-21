@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Calories management</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
 <section>
@@ -30,7 +30,7 @@
         <button type="submit">Filter</button>
     </form>
     <hr/>
-    <a href="meals?action=create">Add Meal</a>
+    <button onclick="window.location='meals/create'" type="button">Add Meal</button>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -40,9 +40,10 @@
             <th>Calories</th>
             <th></th>
             <th></th>
+            <th>Id</th>
         </tr>
         </thead>
-        <c:forEach items="${meals}" var="meal">
+        <c:forEach items="${userMeals}" var="meal">
             <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
             <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
                 <td>
@@ -55,6 +56,7 @@
                 <td>${meal.calories}</td>
                 <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
                 <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
+                <td>${meal.id}</td>
             </tr>
         </c:forEach>
     </table>
