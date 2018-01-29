@@ -82,6 +82,7 @@ function failNoty(jqXHR) {
 
 function renderEditBtn(data, type, row) {
     if (type === "display") {
+        /*debugger;*/
         return "<a onclick='updateRow(" + row.id + ");'>" +
             "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a>";
     }

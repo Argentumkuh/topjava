@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava;
 
-import ru.javawebinar.topjava.model.AbstractBaseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ru.javawebinar.topjava.model.User;
@@ -14,10 +13,11 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     private final UserTo userTo;
 
-    private static int id = AbstractBaseEntity.START_SEQ;
+    private static int id;
 
     public AuthorizedUser(User user) {
         super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, user.getRoles());
+        AuthorizedUser.id = user.getId();
         this.userTo = UserUtil.asTo(user);
     }
 
